@@ -3,8 +3,10 @@ from django.db import models
 from django.db.models import CharField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class User(AbstractUser):
 
     GENDER_CHOICES = {
@@ -24,7 +26,7 @@ class User(AbstractUser):
     following = models.ManyToManyField("self")
 
     def __str__(self):
-        return self.name
+        return self.username
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})

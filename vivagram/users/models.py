@@ -10,7 +10,7 @@ class User(AbstractUser):
     GENDER_CHOICES = {
         ('male', 'Male'),
         ('female', 'Female'),
-        ('not-specified','Not specified')
+        ('not-specified', 'Not specified')
     }
 
     # First Name and Last Name do not cover name patterns
@@ -20,6 +20,8 @@ class User(AbstractUser):
     bio = models.TextField(null=True)
     phone = models.CharField(null=True, max_length=140)
     gender = models.CharField(null=True, max_length=80, choices=GENDER_CHOICES)
+    followers = models.ManyToManyField("self")
+    following = models.ManyToManyField("self")
 
     def __str__(self):
         return self.name

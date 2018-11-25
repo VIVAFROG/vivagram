@@ -25,11 +25,11 @@ class Image(TimeStampedModel):
 
     @property
     def like_count(self):
-        return self.likes.all().count()        
+        return self.likes.all().count()
 
     def __str__(self):
         return '{} - {}'.format(self.location, self.caption)
-    
+
     class Meta:
         ordering = ['-created_at']
 
@@ -49,7 +49,7 @@ class Comment(TimeStampedModel):
 class Like(TimeStampedModel):
     """ Like Model  """
     creator = models.ForeignKey(user_models.User, on_delete=models.PROTECT, null=True)
-    image = models.ForeignKey(Image, on_delete=models.PROTECT, null=True, related_name = 'likes')
+    image = models.ForeignKey(Image, on_delete=models.PROTECT, null=True, related_name='likes')
 
     def __str__(self):
         return 'User: {} - Image Caption: {}'.format(self.creator.username, self.image.caption)

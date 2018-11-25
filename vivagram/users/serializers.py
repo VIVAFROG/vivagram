@@ -7,7 +7,7 @@ from vivagram.images import serializers as images_serializers
 class UserProfileSerializer(serializers.ModelSerializer):
 
     images = images_serializers.UserProfileImageSerializer(many=True)
-    
+
 
     class Meta:
         model = models.User
@@ -22,7 +22,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'images',
         )
 
-class ExploreUserSerializer(serializers.ModelSerializer):
+class ListUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User

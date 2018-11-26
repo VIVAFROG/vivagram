@@ -44,8 +44,9 @@ class UnFollowUser(APIView):
         user.save()
         return Response(status=status.HTTP_200_OK)
 
+
 class UserProfile(APIView):
-    
+
     def get(self, request, username, format=None):
 
         try:
@@ -56,6 +57,7 @@ class UserProfile(APIView):
         serializer = serializers.UserProfileSerializer(found_user)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
 
 class UserFollowers(APIView):
 
@@ -72,6 +74,7 @@ class UserFollowers(APIView):
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
+
 class UserFollowing(APIView):
 
     def get(self, request, username, format=None):
@@ -83,5 +86,17 @@ class UserFollowing(APIView):
 
         user_following = found_user.following.all()
         serializer = serializers.ListUserSerializer(user_following, many=True)
-        
+
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class Search(APIView):
+    def get(self, request, foramt=None):
+        username = request.query_params.get('username', None)
+
+        if username is not None:
+            users = models.User.objects.filter(username__istartswith=username)
+            serialzer = serializers.ListUserSerializer(users, many=True)
+            return Response(data=serialzer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)   

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from vivagram.users import models as user_model
+from vivagram.users import models as user_models
 
 
 class SmallImageSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class CountImageSerializer(serializers.ModelSerializer):
 class FeedUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = user_model.User
+        model = user_models.User
         fields = (
             'username',
             'profile_image',

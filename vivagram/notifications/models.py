@@ -4,6 +4,7 @@ from vivagram.users import models as user_models
 from vivagram.images import models as image_models
 # Create your models here.
 
+
 @python_2_unicode_compatible
 class Notification(image_models.TimeStampedModel):
     TYPE_CHOICES = (
@@ -17,3 +18,15 @@ class Notification(image_models.TimeStampedModel):
     notification_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     image = models.ForeignKey(image_models.Image, on_delete=models.PROTECT, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
+
+
+def create_notification(creator, to, notification_type, image=None, comment=None):
+    notification = models.Notification.objects.create(
+        creator=creator,
+        to=to,
+        notification_type=notification_type,
+        image=image,
+        comment=comment
+    )
+
+    notification.save()

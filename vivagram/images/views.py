@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
-
-
-# Create your views here.
+from vivagram.users import models as user_models
+from vivagram.users import serializers as user_serializers
+from vivagram.notifications import views as notification_views
 
 
 class Feed(APIView):
@@ -27,6 +27,18 @@ class Feed(APIView):
 
 class LikeImage(APIView):
 
+    def get(self, request, image_id, format=None):
+
+        likes = models.Like.objects.filter(image__id=image_id)
+
+        like_creators_ids = likes.values('creator_id')
+
+        users = user_models.User.objects.filter(id__in=like_creators_ids)
+
+        serializer = user_serializers.ListUserSerializer(users, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     def post(self, request, image_id, format=None):
 
         user = request.user
@@ -34,12 +46,12 @@ class LikeImage(APIView):
         # like notification
 
         try:
-            found_image = models.Image.objects.get(image__id=image_id)
-        except models.Image.DoesNotExists:
+            found_image = models.Image.objects.get(id=image_id)
+        except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         try:
-            pre_exisiting_like = models.Like.objects.get(
+            preexisiting_like = models.Like.objects.get(
                 creator=user,
                 image=found_image
             )
@@ -58,16 +70,12 @@ class UnLikeImage(APIView):
         user = request.user
 
         try:
-            found_image = models.Image.objects.get(image__id=image_id)
-        except models.Image.DoesNotExists:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        try:
-            pre_exisiting_like = models.Like.objects.get(
+            preexisiting_like = models.Like.objects.get(
                 creator=user,
-                image=found_image
+                image__id=image_id
             )
-            pre_exisiting_like.delete()
+            preexisiting_like.delete()
+
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except models.Like.DoesNotExist:
@@ -84,7 +92,7 @@ class CommentOnImage(APIView):
 
         try:
             found_image = models.Image.objects.get(id=image_id)
-        except models.Image.DosNotExist:
+        except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = serializers.CommentSerializer(data=request.data)
 
@@ -102,7 +110,7 @@ class Comment(APIView):
 
         user = request.user
         try:
-            comment = models.Comment.object.get(id=image_id, creator=user)
+            comment = models.Comment.objects.get(id=image_id, creator=user)
             comment.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except models.Comment.DoesNotExist:

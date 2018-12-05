@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
+from vivagram.notifications import views as notification_views
 
 
 class ExploreUsers(APIView):
@@ -16,7 +17,7 @@ class ExploreUsers(APIView):
 class FollowUser(APIView):
 
     def post(self, request, user_id, format=None):
-
+        pass
         user = request.user
 
         try:
@@ -25,9 +26,10 @@ class FollowUser(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user.following.add(user_to_follow)
-        user.save()
-        return Response(status=status.HTTP_200_OK)
 
+        user.save()
+
+        return Response(status=status.HTTP_200_OK)
 
 class UnFollowUser(APIView):
 
@@ -91,12 +93,12 @@ class UserFollowing(APIView):
 
 
 class Search(APIView):
-    def get(self, request, foramt=None):
+    def get(self, request, format=None):
         username = request.query_params.get('username', None)
 
         if username is not None:
             users = models.User.objects.filter(username__istartswith=username)
-            serialzer = serializers.ListUserSerializer(users, many=True)
-            return Response(data=serialzer.data, status=status.HTTP_200_OK)
+            serializer = serializers.ListUserSerializer(users, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)   
+            return Response(status=status.HTTP_400_BAD_REQUEST)

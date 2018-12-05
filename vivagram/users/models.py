@@ -9,16 +9,16 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class User(AbstractUser):
 
-    GENDER_CHOICES = {
+    GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
         ('not-specified', 'Not specified')
-    }
+    )
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
     profile_image = models.ImageField(null=True)
-    name = CharField(_("Name of User"), blank=True, max_length=255)
+    name = models.CharField(_("Name of User"), blank=True, max_length=255)
     website = models.URLField(null=True)
     bio = models.TextField(null=True)
     phone = models.CharField(null=True, max_length=140)

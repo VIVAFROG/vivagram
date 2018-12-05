@@ -15,13 +15,15 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path(
-        "users/",
-        include("vivagram.users.urls", namespace="users"),
-    ),
+    path("users/",include("vivagram.users.urls", namespace="users"),),
     # image
     path("images/", include("vivagram.images.urls", namespace="images"),),
+    # notifications
+    path("notifications/", include("vivagram.notifications.urls", namespace="notifications"),),
+
+
     path("accounts/", include("allauth.urls")),
+
     # Your stuff: custom urls includes go here
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

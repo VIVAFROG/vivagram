@@ -63,17 +63,18 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
-    #'crispy_forms',
-    'allauth', #registration
-    'allauth.account', #registration
-    'allauth.socialaccount', #registration
-    'rest_framework', #REST framework
-    'taggit' #Tags for the photos
+    # 'crispy_forms',
+    'allauth',  # registration
+    'allauth.account',  # registration
+    'allauth.socialaccount',  # registration
+    'rest_framework',  # REST framework
+    'taggit'  # Tags for the photos
 ]
 LOCAL_APPS = [
     'vivagram.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
-    'vivagram.images.apps.ImagesConfig',
+    'vivagram.images.apps.ImagesConfig',  # Images app
+    'vivagram.notifications.apps.NotificationsConfig',  # Notifications app
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

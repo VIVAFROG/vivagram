@@ -43,8 +43,6 @@ class LikeImage(APIView):
 
         user = request.user
 
-        # like notification
-
         try:
             found_image = models.Image.objects.get(id=image_id)
         except models.Image.DoesNotExist:
@@ -62,6 +60,10 @@ class LikeImage(APIView):
                 image=found_image
             )
             new_like.save()
+
+            # like notification
+            notification_views.create_notification(user, found_image.creator, 'like', found_image)
+
             return Response(status=status.HTTP_201_CREATED)
 
 
@@ -88,8 +90,6 @@ class CommentOnImage(APIView):
 
         user = request.user
 
-        # comment notification
-
         try:
             found_image = models.Image.objects.get(id=image_id)
         except models.Image.DoesNotExist:
@@ -98,6 +98,11 @@ class CommentOnImage(APIView):
 
         if serializer.is_valid():
             serializer.save(creator=user, image=found_image)
+
+            # comment notification
+            notification_views.create_notification(
+                user, found_image.creator, 'comment', found_image, serializer.data['message'])
+
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -130,7 +135,23 @@ class Search(APIView):
             serializer = serializers.CountImageSerializer(images, many=True)
 
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-            
+
         else:
-            
+
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ModerateComments(APIView):
+
+    def delete(self, request, image_id, comment_id, format=None):
+
+        user = request.user
+
+        try:
+            comment_to_delete = models.Comment.objects.get(
+                id=comment_id, image__id=image_id, image__creator=user)
+            comment_to_delete.delete()
+        except models.Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

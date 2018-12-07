@@ -19,14 +19,8 @@ class Notification(image_models.TimeStampedModel):
     image = models.ForeignKey(image_models.Image, on_delete=models.PROTECT, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['-created_at']
 
-def create_notification(creator, to, notification_type, image=None, comment=None):
-    notification = models.Notification.objects.create(
-        creator=creator,
-        to=to,
-        notification_type=notification_type,
-        image=image,
-        comment=comment
-    )
-
-    notification.save()
+    def __str__(self):
+        return 'From: {} - To: {}'.format(self.creator, self.to)

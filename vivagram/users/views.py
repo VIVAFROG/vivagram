@@ -29,9 +29,10 @@ class FollowUser(APIView):
 
         user.save()
 
-        notification_views.create_notification(user,user_to_follow,'follow')
-        
+        notification_views.create_notification(user, user_to_follow, 'follow')
+
         return Response(status=status.HTTP_200_OK)
+
 
 class UnFollowUser(APIView):
 
@@ -85,7 +86,8 @@ class UserProfile(APIView):
                 return Response(data=serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class UserFollowers(APIView):
 
     def get(self, request, username, format=None):
@@ -127,3 +129,35 @@ class Search(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangePassword(APIView):
+
+    def put(self, request, username, format=None):
+        user = request.user
+        
+        if user.username == username:
+            current_password = request.data.get('current_password', None)
+
+            if current_password is not None:
+                passwords_match = user.check_password(current_password)
+
+                if passwords_match:
+                    new_password = request.data.get('new_password', None)
+
+                    if new_password is not None:
+                        user.set_password(new_password)
+                        user.save()
+                        return Response(status=status.HTTP_200_OK)
+
+                    else:
+                        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+                else:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)

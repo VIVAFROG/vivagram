@@ -68,7 +68,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'rest_framework',  # REST framework
-    'taggit'  # Tags for the photos
+    'taggit',  # Tags for the photos
+    'taggit_serializer', #Tag serializer
 ]
 LOCAL_APPS = [
     'vivagram.users.apps.UsersAppConfig',

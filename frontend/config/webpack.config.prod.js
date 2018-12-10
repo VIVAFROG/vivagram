@@ -376,6 +376,7 @@ module.exports = {
               {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
+                modules: true,
               },
               'sass-loader'
             ),

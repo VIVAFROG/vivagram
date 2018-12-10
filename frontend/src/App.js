@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import style from './App.module.scss';
 
+// fetch('/notifications/')
+
 class App extends Component {
   render() {
     return (
@@ -9,7 +11,7 @@ class App extends Component {
         <header className={style.appHeader}>
           <img src={logo} className={style.appLogo} alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Whatever
           </p>
           <a
             className={style.appLink}

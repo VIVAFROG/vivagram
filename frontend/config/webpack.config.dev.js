@@ -68,7 +68,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
   ];
   if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
+    loaders.push(preProcessor);
   }
   return loaders;
 };
@@ -312,7 +312,12 @@ module.exports = {
                 getLocalIdent: getCSSModuleLocalIdent,
                 camelCase: true,
               },
-              'sass-loader'
+              {
+                loader: require.resolve("sass-loader"),
+                options:{
+                  data: `@import "${paths.appSrc}/config/_variables.scss";`
+                }
+              },
             ),
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

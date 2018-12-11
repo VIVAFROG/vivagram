@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import style from './App.module.scss';
+import styles from './App.module.scss';
 
 // fetch('/notifications/')
 
 class App extends Component {
   render() {
     return (
-      <div className={style.App}>
-        <header className={style.appHeader}>
-          <img src={logo} className={style.appLogo} alt="logo" />
-          <p>
-            Whatever
-          </p>
-          <a
-            className={style.appLink}
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <div className={styles.App}>
+        <header className={styles.appHeader}>
+          <h1 className={styles.appTitle}>Welcome to React</h1>
         </header>
+        <p className={styles.appIntro}>To get started, whatever</p>
       </div>
     );
   }

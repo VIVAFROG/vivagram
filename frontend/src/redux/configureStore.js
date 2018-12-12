@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { i18nState } from "redux-i18n";
 import users from "redux/modules/users";
-// import Reactotron from 'ReactotronConfig';
+import Reactotron from "ReactotronConfig";
 
 const env = process.env.NODE_ENV;
 
@@ -29,7 +29,7 @@ let store;
 
 if (env === "development") {
   store = initialState =>
-    createStore(
+    Reactotron.createStore(
       reducer(history),
       composeWithDevTools(applyMiddleware(...middlewares))
     );

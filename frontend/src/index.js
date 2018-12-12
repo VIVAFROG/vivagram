@@ -7,6 +7,8 @@ import App from "App";
 import { translations } from "translations";
 import { ConnectedRouter } from "connected-react-router";
 
+import "ReactotronConfig"
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import I18n from "redux-i18n";
 import store, { history } from "redux/configureStore";
-import App from "App";
+import App from "components/App/index"; // ?
 import { translations } from "translations";
 import { ConnectedRouter } from "connected-react-router";
 

@@ -378,7 +378,13 @@ module.exports = {
                 sourceMap: shouldUseSourceMap,
                 modules: true,
               },
-              'sass-loader'
+              // 'sass-loader'
+              {
+                loader: require.resolve("sass-loader"),
+                options: {
+                  data: `@import "${paths.appSrc}/config/_variables.scss";`
+                }
+              }
             ),
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
@@ -402,7 +408,6 @@ module.exports = {
                 loader: require.resolve("sass-loader"),
                 options:{
                   data: `@import "${paths.appSrc}/config/_variables.scss";`,
-                  sourceMap: shouldUseSourceMap,
                 }
               },
             ),

@@ -1,8 +1,8 @@
-import Reactotron from "reactotron-react-js";
-import { reactotronRedux } from "reactotron-redux";
+// import Reactotron from "reactotron-react-js";
+// import { reactotronRedux } from "reactotron-redux";
 
-Reactotron.configure({ name: "vivagram" })
-  .use(reactotronRedux())
-  .connect();
+// Reactotron.configure({ name: "vivagram" })
+//   .use(reactotronRedux())
+//   .connect();
   
-export default Reactotron;
+// export default Reactotron;

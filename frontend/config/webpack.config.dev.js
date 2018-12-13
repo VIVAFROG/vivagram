@@ -305,7 +305,8 @@ module.exports = {
               {
                 loader: require.resolve("sass-loader"),
                 options: {
-                  data: `@import "${paths.appSrc}/config/_variables.scss";`
+                  data: `@import "${paths.appSrc}/config/_variables.scss";`,
+                  camelCase: "dashes",
                 }
               }),
           },

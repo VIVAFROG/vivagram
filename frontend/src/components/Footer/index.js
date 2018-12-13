@@ -26,3 +26,4 @@ const Footer = (props, context) => (
 );
 
 export default Footer;
+

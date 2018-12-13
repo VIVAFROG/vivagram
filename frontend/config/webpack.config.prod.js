@@ -377,14 +377,13 @@ module.exports = {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
-                
+                camelCase: "dashes"
               },
               // 'sass-loader'
               {
                 loader: require.resolve("sass-loader"),
                 options: {
                   data: `@import "${paths.appSrc}/config/_variables.scss";`,
-                  camelCase: "dashes",
                 }
               }
             ),
@@ -410,6 +409,7 @@ module.exports = {
                 loader: require.resolve("sass-loader"),
                 options:{
                   data: `@import "${paths.appSrc}/config/_variables.scss";`,
+                  camelCase: "dashes",
                 }
               },
             ),

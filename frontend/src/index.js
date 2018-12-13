@@ -7,7 +7,7 @@ import App from "components/App/index"; // ?
 import { translations } from "translations";
 import { ConnectedRouter } from "connected-react-router";
 
-import "ReactotronConfig"
+// import "ReactotronConfig"
 
 ReactDOM.render(
   <Provider store={store}>

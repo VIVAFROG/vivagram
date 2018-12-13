@@ -1,11 +1,16 @@
-import { connect } from "react-redux";
-import Container from "./container";
+import React, { Component } from 'react';
+import styles from './styles.scss';
+import Footer from "components/Footer"
+// fetch('/notifications/')
 
-const mapStateToProps = (state, ownProps) => {
-  const { user } = state;
-  return {
-    isLoggedIn: user.isLoggedIn
-  };
-};
+class App extends Component {
+  render() {
+    return (
+      <div className={styles.App}>
+      <Footer />
+      </div>
+    );
+  }
+}
 
-export default connect(mapStateToProps)(Container)
+export default App;
